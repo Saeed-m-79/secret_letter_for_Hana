@@ -9,7 +9,7 @@
     body {
       margin: 0;
       font-family: "Segoe UI", Tahoma, sans-serif;
-      background: linear-gradient(135deg, #ff9a9e, #fad0c4);
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
       display: flex;
       align-items: center;
       justify-content: center;
@@ -21,43 +21,47 @@
 
     .container {
       position: relative;
+      animation: fadeIn 2s ease;
     }
 
     h1 {
-      font-size: 2.5rem;
-      margin-bottom: 40px;
-      animation: fadeIn 2s ease;
+      font-size: 2.8rem;
+      margin-bottom: 50px;
+      text-shadow: 0 0 15px rgba(255,255,255,0.4);
     }
 
     .buttons {
       display: flex;
       gap: 20px;
       justify-content: center;
+      position: relative;
+      height: 80px;
     }
 
     button {
       border: none;
-      padding: 15px 30px;
+      padding: 15px 32px;
       font-size: 18px;
       border-radius: 50px;
       cursor: pointer;
-      transition: 0.3s ease;
+      transition: 0.25s ease;
     }
 
     #yesBtn {
-      background: #ff4d6d;
+      background: #ff2e63;
       color: white;
-      box-shadow: 0 0 15px rgba(0,0,0,0.2);
+      box-shadow: 0 0 20px rgba(0,0,0,0.25);
     }
 
     #yesBtn:hover {
-      transform: scale(1.1);
+      transform: scale(1.12);
+      box-shadow: 0 0 30px rgba(0,0,0,0.35);
     }
 
     #noBtn {
-      background: #6c757d;
+      background: #444;
       color: white;
-      position: relative;
+      position: absolute;
     }
 
     .gallery {
@@ -74,12 +78,12 @@
     }
 
     .gallery img {
-      max-width: 80%;
-      max-height: 70vh;
-      border-radius: 20px;
-      box-shadow: 0 0 20px rgba(255,255,255,0.3);
+      max-width: 85%;
+      max-height: 75vh;
+      border-radius: 22px;
+      box-shadow: 0 0 25px rgba(255,255,255,0.35);
       opacity: 0;
-      transition: opacity 1s ease;
+      transition: opacity 1.2s ease;
     }
 
     .show {
@@ -88,8 +92,8 @@
 
     .final-text {
       position: absolute;
-      bottom: 40px;
-      font-size: 24px;
+      bottom: 50px;
+      font-size: 26px;
       opacity: 0;
       transition: opacity 2s ease;
     }
@@ -99,7 +103,7 @@
     }
 
     @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(20px); }
+      from { opacity: 0; transform: translateY(30px); }
       to { opacity: 1; transform: translateY(0); }
     }
   </style>
@@ -109,7 +113,7 @@
   <div class="container" id="mainPage">
     <h1>Will you be my valentine Hanaeiiii?? 🤩</h1>
 
-    <div class="buttons">
+    <div class="buttons" id="buttonArea">
       <button id="yesBtn">Yes 💖</button>
       <button id="noBtn">No 😢</button>
     </div>
@@ -131,41 +135,43 @@
     const img = document.getElementById("media");
     const finalText = document.getElementById("finalText");
 
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * (window.innerWidth - 100);
-      const y = Math.random() * (window.innerHeight - 50);
+    const buttonArea = document.getElementById("buttonArea");
 
-      noBtn.style.position = "absolute";
+    // حرکت بازیگوش دکمه No 😆
+    function moveNoButton() {
+      const areaRect = buttonArea.getBoundingClientRect();
+
+      const maxX = areaRect.width - noBtn.offsetWidth;
+      const maxY = areaRect.height - noBtn.offsetHeight;
+
+      const x = Math.random() * maxX;
+      const y = Math.random() * maxY;
+
       noBtn.style.left = x + "px";
       noBtn.style.top = y + "px";
-    });
-
-    const images = ["img1.jpg", "img2.jpg", "img3.jpg"];
-    let index = 0;
-
-    function showNext() {
-      if (index >= images.length) {
-        finalText.classList.add("show");
-        return;
-      }
-
-      img.classList.remove("show");
-
-      setTimeout(() => {
-        img.src = images[index];
-        img.classList.add("show");
-        index++;
-      }, 500);
     }
 
-    yesBtn.addEventListener("click", () => {
-      mainPage.style.display = "none";
-      gallery.style.display = "flex";
+    noBtn.addEventListener("mouseover", moveNoButton);
+    noBtn.addEventListener("click", moveNoButton);
 
-      music.play();
-      showNext();
-      setInterval(showNext, 4000);
-    });
-  </script>
-</body>
-</html>
+
+    // ==============================
+    // 📸 لیست عکس‌ها
+    // اینجا می‌تونی عکس اضافه، حذف یا جابه‌جا کنی
+    // فقط اسم فایل داخل ریپازیتوری رو بنویس
+    // ==============================
+    const images = [
+      "img1.jpg",
+      "img2.jpg",
+      "img3.jpg"
+    ];
+
+
+    // ==============================
+    // ⏱ زمان نمایش هر عکس (میلی‌ثانیه)
+    // مثلا 4000 یعنی 4 ثانیه
+    // ==============================
+    const slideDuration = 4000;
+
+
+    let index = 0;
