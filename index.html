@@ -58,8 +58,10 @@ button {
 #noBtn {
   background: #444;
   color: white;
-  position: fixed; /* مهم */
-  transition: all 0.25s ease; /* حرکت نرم */
+  position: fixed;
+  transition: all 0.25s ease;
+  left: auto;
+  top: auto;
 }
 
 .gallery {
@@ -133,8 +135,7 @@ const music = document.getElementById("music");
 const img = document.getElementById("media");
 const finalText = document.getElementById("finalText");
 
-
-// 🎯 حرکت فراری دکمه No
+// 🎯 Moving No button
 function moveNoButton() {
   const maxX = window.innerWidth - noBtn.offsetWidth;
   const maxY = window.innerHeight - noBtn.offsetHeight;
@@ -148,15 +149,14 @@ function moveNoButton() {
 
 noBtn.addEventListener("mouseover", moveNoButton);
 noBtn.addEventListener("click", moveNoButton);
-noBtn.addEventListener("touchstart", moveNoButton); // موبایل
+noBtn.addEventListener("touchstart", moveNoButton);
 
-
-// 📸 لیست عکس‌ها
+// 📸 Image list (fixed commas)
 const images = [
   "img1.jpg",
   "img2.jpg",
   "img3.jpg",
-  "5801054551543582075.jpg"
+  "5801054551543582075.jpg",
   "img3.jpg",
   "5801054551543582075.jpg",
   "5893010333923134429.jpg",
@@ -178,14 +178,11 @@ const images = [
 const slideDuration = 5000;
 let index = 0;
 
-
-// 💖 وقتی Yes کلیک شود
+// 💖 Yes button
 yesBtn.addEventListener("click", () => {
   mainPage.style.display = "none";
   gallery.style.display = "flex";
-
   music.play();
-
   showSlide();
 });
 
