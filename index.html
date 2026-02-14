@@ -58,10 +58,7 @@ button {
 #noBtn {
   background: #444;
   color: white;
-  position: fixed;
   transition: all 0.25s ease;
-  left: auto;
-  top: auto;
 }
 
 .gallery {
@@ -137,6 +134,14 @@ const finalText = document.getElementById("finalText");
 
 // 🎯 Moving No button
 function moveNoButton() {
+  // first time, make it fixed at its current position
+  if (noBtn.style.position !== "fixed") {
+    const rect = noBtn.getBoundingClientRect();
+    noBtn.style.position = "fixed";
+    noBtn.style.left = rect.left + "px";
+    noBtn.style.top = rect.top + "px";
+  }
+
   const maxX = window.innerWidth - noBtn.offsetWidth;
   const maxY = window.innerHeight - noBtn.offsetHeight;
 
@@ -151,7 +156,7 @@ noBtn.addEventListener("mouseover", moveNoButton);
 noBtn.addEventListener("click", moveNoButton);
 noBtn.addEventListener("touchstart", moveNoButton);
 
-// 📸 Image list (fixed commas)
+// 📸 Image list
 const images = [
   "img1.jpg",
   "img2.jpg",
@@ -172,7 +177,7 @@ const images = [
   "5801054551543582079.jpg",
   "5803306351357267141.jpg",
   "5801054551543582080.jpg",
-  "5801054551543582082.jpg",
+  "5801054551543582082.jpg"
 ];
 
 const slideDuration = 5000;
